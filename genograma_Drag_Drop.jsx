@@ -170,104 +170,123 @@ const FemeninoNode = ({ data, id }) => (
   </div>
 );
 
-const FallecidoMNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 60,
-      height: 60,
-      background: "#fee2e2",
-      border: "2px solid #7f1d1d",
-      position: "relative",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+/* 1) Para permitir la edición de los nombres en FallecidoMNode y ajustar la cruz: */
+const FallecidoMNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data.label || "");
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+  const handleBlur = () => {
+    setEditing(false);
+    // Si está definida la función onEdit, la llamamos
+    if (data.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
 
-    <svg
-      width="60"
-      height="60"
-      style={{ position: "absolute", top: 0, left: 0 }}
+  return (
+    <div
+      style={{
+        width: 60,
+        height: 60,
+        background: "#fee2e2",
+        border: "2px solid #7f1d1d",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
     >
-      <line x1="0" y1="0" x2="60" y2="60" stroke="#7f1d1d" strokeWidth="2" />
-      <line x1="60" y1="0" x2="0" y2="60" stroke="#7f1d1d" strokeWidth="2" />
-    </svg>
-    <div style={{ paddingTop: 40, textAlign: "center" }}>{data.label}</div>
-  </div>
-);
+      {/* Handles */}
+      <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+      <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
+      <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
 
-const FallecidoFNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 60,
-      height: 60,
-      borderRadius: "50%",
-      background: "#fff1f2",
-      border: "2px solid #be123c",
-      position: "relative",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+      {/* Ajustamos el SVG para que la cruz no se salga del recuadro */}
+      <svg
+        width="48"
+        height="48"
+        style={{ position: "absolute", top: 6, left: 6 }}
+      >
+        <line x1="0" y1="0" x2="48" y2="48" stroke="#7f1d1d" strokeWidth="2" />
+        <line x1="48" y1="0" x2="0" y2="48" stroke="#7f1d1d" strokeWidth="2" />
+      </svg>
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+      {/* Edición del texto al hacer doble click */}
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{ textAlign: "center" }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)} style={{ paddingTop: 40 }}>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};
 
-    <svg
-      width="60"
-      height="60"
-      style={{ position: "absolute", top: 0, left: 0 }}
+/* 2) Para FallecidoFNode, misma idea: edición y cruz adaptada al círculo */
+const FallecidoFNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data.label || "");
+
+  const handleBlur = () => {
+    setEditing(false);
+    if (data.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: "50%",
+        background: "#fff1f2",
+        border: "2px solid #be123c",
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
     >
-      <line x1="0" y1="0" x2="60" y2="60" stroke="#be123c" strokeWidth="2" />
-      <line x1="60" y1="0" x2="0" y2="60" stroke="#be123c" strokeWidth="2" />
-    </svg>
-    <div style={{ paddingTop: 40, textAlign: "center" }}>{data.label}</div>
-  </div>
-);
+      <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+      <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
+      <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+
+      {/* Cruz ligeramente más pequeña y centrada */}
+      <svg
+        width="48"
+        height="48"
+        style={{ position: "absolute", top: 6, left: 6 }}
+      >
+        <line x1="0" y1="0" x2="48" y2="48" stroke="#be123c" strokeWidth="2" />
+        <line x1="48" y1="0" x2="0" y2="48" stroke="#be123c" strokeWidth="2" />
+      </svg>
+
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{ textAlign: "center" }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)} style={{ paddingTop: 40 }}>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const EmbarazoNode = ({ data, id }) => (
   <div
