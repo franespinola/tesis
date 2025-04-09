@@ -69,6 +69,7 @@ const EditableNode = ({ data, id, onEdit }) => {
           onChange={(e) => setLabel(e.target.value)}
           onBlur={handleBlur}
           autoFocus
+          style={{ textAlign: "center" }}
         />
       ) : (
         <div onDoubleClick={() => setEditing(true)}>
@@ -81,103 +82,155 @@ const EditableNode = ({ data, id, onEdit }) => {
 };
 
 /** ========================
- *  Nodos “genéricos”: Masculino, Femenino, etc.
+ *  Nodos “genéricos”
  * ======================== */
-const MasculinoNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 60,
-      height: 60,
-      background: "#ddd6fe",
-      border: "2px solid #4f46e5",
-      position: "relative",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center"
-    }}
-  >
-    {/* Handles arriba y abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
 
-    {/* Handles izquierda y derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+/** NODO Masculino */
+const MasculinoNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data?.label || "");
 
-    <small>ID: {id}</small>
-    <div>{data.label}</div>
-  </div>
-);
+  const handleBlur = () => {
+    setEditing(false);
+    if (data?.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
 
-const FemeninoNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 60,
-      height: 60,
-      borderRadius: "999px",
-      background: "#fbcfe8",
-      border: "2px solid #be185d",
-      position: "relative",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+  return (
+    <div
+      style={{
+        width: 60,
+        height: 60,
+        background: "#ddd6fe",
+        border: "2px solid #4f46e5",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      {/* Handles arriba y abajo */}
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+      {/* Handles izquierda y derecha */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: "#555" }}
+      />
 
-    <small>ID: {id}</small>
-    <div>{data.label}</div>
-  </div>
-);
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{ textAlign: "center" }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)}>
+          <small style={{ display: "block" }}>ID: {id}</small>
+          {data.label}
+        </div>
+      )}
+    </div>
+  );
+};
 
-/* 1) Para permitir la edición de los nombres en FallecidoMNode y ajustar la cruz: */
+/** NODO Femenino */
+const FemeninoNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data?.label || "");
+
+  const handleBlur = () => {
+    setEditing(false);
+    if (data?.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: "999px",
+        background: "#fbcfe8",
+        border: "2px solid #be185d",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      {/* Arriba / Abajo */}
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
+
+      {/* Izquierda / Derecha */}
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: "#555" }}
+      />
+
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{ textAlign: "center" }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)}>
+          <small style={{ display: "block" }}>ID: {id}</small>
+          {data.label}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/** NODO Fallecido Masculino */
 const FallecidoMNode = ({ data, id }) => {
   const [editing, setEditing] = useState(false);
   const [label, setLabel] = useState(data.label || "");
 
   const handleBlur = () => {
     setEditing(false);
-    // Si está definida la función onEdit, la llamamos
     if (data.onEdit) {
       data.onEdit(id, label);
     }
@@ -192,6 +245,8 @@ const FallecidoMNode = ({ data, id }) => {
         border: "2px solid #7f1d1d",
         position: "relative",
         display: "flex",
+        textAlign: "center",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
       }}
@@ -212,7 +267,6 @@ const FallecidoMNode = ({ data, id }) => {
         <line x1="48" y1="0" x2="0" y2="48" stroke="#7f1d1d" strokeWidth="2" />
       </svg>
 
-      {/* Edición del texto al hacer doble click */}
       {editing ? (
         <input
           value={label}
@@ -223,6 +277,7 @@ const FallecidoMNode = ({ data, id }) => {
         />
       ) : (
         <div onDoubleClick={() => setEditing(true)} style={{ paddingTop: 40 }}>
+          <small style={{ display: "block" }}>ID: {id}</small>
           {label}
         </div>
       )}
@@ -230,7 +285,7 @@ const FallecidoMNode = ({ data, id }) => {
   );
 };
 
-/* 2) Para FallecidoFNode, misma idea: edición y cruz adaptada al círculo */
+/** NODO Fallecido Femenino */
 const FallecidoFNode = ({ data, id }) => {
   const [editing, setEditing] = useState(false);
   const [label, setLabel] = useState(data.label || "");
@@ -252,6 +307,8 @@ const FallecidoFNode = ({ data, id }) => {
         border: "2px solid #be123c",
         position: "relative",
         display: "flex",
+        textAlign: "center",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
       }}
@@ -281,6 +338,7 @@ const FallecidoFNode = ({ data, id }) => {
         />
       ) : (
         <div onDoubleClick={() => setEditing(true)} style={{ paddingTop: 40 }}>
+          <small style={{ display: "block" }}>ID: {id}</small>
           {label}
         </div>
       )}
@@ -288,134 +346,221 @@ const FallecidoFNode = ({ data, id }) => {
   );
 };
 
-const EmbarazoNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-      background: "#fffbe6",
-      border: "2px dashed #facc15",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 10,
-      position: "relative"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+/** NODO Embarazo */
+const EmbarazoNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data?.label || "E"); // Por defecto "E"
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+  const handleBlur = () => {
+    setEditing(false);
+    if (data?.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
 
-    <div>E</div>
-  </div>
-);
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        background: "#fffbe6",
+        border: "2px dashed #facc15",
+        display: "flex",
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 10,
+        position: "relative"
+      }}
+    >
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
 
-const AbortoNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-      background: "#fcd34d",
-      border: "2px solid #b45309",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 10,
-      position: "relative"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: "#555" }}
+      />
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{
+            width: "95%",
+            textAlign: "center",
+            fontSize: 10
+          }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)}>
+          <small style={{ display: "block" }}>ID: {id}</small>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};
 
-    ✖
-  </div>
-);
+/** NODO Aborto */
+const AbortoNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data?.label || "✖"); // Por defecto "✖"
 
-const AdopcionNode = ({ data, id }) => (
-  <div
-    style={{
-      width: 40,
-      height: 40,
-      borderRadius: "50%",
-      background: "#e0f2fe",
-      border: "2px dotted #4b5563",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 10,
-      position: "relative"
-    }}
-  >
-    {/* Arriba / Abajo */}
-    <Handle
-      type="target"
-      position={Position.Top}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Bottom}
-      style={{ background: "#555" }}
-    />
+  const handleBlur = () => {
+    setEditing(false);
+    if (data?.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
 
-    {/* Izquierda / Derecha */}
-    <Handle
-      type="target"
-      position={Position.Left}
-      style={{ background: "#555" }}
-    />
-    <Handle
-      type="source"
-      position={Position.Right}
-      style={{ background: "#555" }}
-    />
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        background: "#fcd34d",
+        border: "2px solid #b45309",
+        display: "flex",
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 10,
+        position: "relative"
+      }}
+    >
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
 
-    A
-  </div>
-);
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: "#555" }}
+      />
+
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{
+            width: "95%",
+            textAlign: "center",
+            fontSize: 10
+          }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)}>
+          <small style={{ display: "block" }}>ID: {id}</small>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/** NODO Adopción */
+const AdopcionNode = ({ data, id }) => {
+  const [editing, setEditing] = useState(false);
+  const [label, setLabel] = useState(data?.label || "A"); // Por defecto "A"
+
+  const handleBlur = () => {
+    setEditing(false);
+    if (data?.onEdit) {
+      data.onEdit(id, label);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        background: "#e0f2fe",
+        border: "2px dotted #4b5563",
+        display: "flex",
+        textAlign: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 10,
+        position: "relative"
+      }}
+    >
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: "#555" }}
+      />
+
+      <Handle
+        type="target"
+        position={Position.Left}
+        style={{ background: "#555" }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        style={{ background: "#555" }}
+      />
+
+      {editing ? (
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          onBlur={handleBlur}
+          autoFocus
+          style={{
+            width: "95%",
+            textAlign: "center",
+            fontSize: 10
+          }}
+        />
+      ) : (
+        <div onDoubleClick={() => setEditing(true)}>
+          <small style={{ display: "block" }}>ID: {id}</small>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const nodeTypes = {
   paciente: EditableNode,
@@ -425,7 +570,7 @@ const nodeTypes = {
   fallecidoF: FallecidoFNode,
   embarazo: EmbarazoNode,
   aborto: AbortoNode,
-  adopcion: AdopcionNode,
+  adopcion: AdopcionNode
 };
 
 /** =====================================================
@@ -693,7 +838,7 @@ function RelationshipEdge(props) {
 }
 
 const edgeTypes = {
-  relationshipEdge: RelationshipEdge,
+  relationshipEdge: RelationshipEdge
 };
 
 /** Paleta de nodos */
@@ -811,25 +956,25 @@ function Sidebar({ onRelate }) {
       {/* Divorcio */}
       <div style={{ display: "flex", alignItems: "center", marginBottom: 6 }}>
         <svg width="80" height="20">
-            {/* Línea horizontal principal */}
-            <path d="M10,10 L70,10" stroke="black" strokeWidth="2" />
-            {/* 2 líneas inclinadas hacia la izquierda */}
-            <line
-                x1="45"
-                y1="0"
-                x2="35"
-                y2="20"
-                stroke="black"
-                strokeWidth="2"
-            />
-            <line
-                x1="49"
-                y1="0"
-                x2="39"
-                y2="20"
-                stroke="black"
-                strokeWidth="2"
-            />
+          {/* Línea horizontal principal */}
+          <path d="M10,10 L70,10" stroke="black" strokeWidth="2" />
+          {/* 2 líneas inclinadas hacia la izquierda */}
+          <line
+            x1="45"
+            y1="0"
+            x2="35"
+            y2="20"
+            stroke="black"
+            strokeWidth="2"
+          />
+          <line
+            x1="49"
+            y1="0"
+            x2="39"
+            y2="20"
+            stroke="black"
+            strokeWidth="2"
+          />
         </svg>
         <span style={{ marginLeft: 8 }}>Divorcio</span>
       </div>
@@ -937,7 +1082,7 @@ function GenogramaEditorWrapper() {
   const [nodes, setNodes, onNodesChange] = useNodesState([
     {
       id: "1",
-      type: "paciente",
+      type: "paciente", // Este es editable
       position: { x: 250, y: 100 },
       data: { label: "Paciente" }
     }
@@ -1041,7 +1186,7 @@ function GenogramaEditorWrapper() {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-  // Editar etiqueta en EditableNode
+  // Editar etiqueta en todos los nodos que usan data.onEdit
   const handleEditLabel = useCallback(
     (id, newLabel) => {
       setNodes((nds) =>
