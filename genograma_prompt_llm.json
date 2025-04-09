@@ -1,0 +1,97 @@
+{
+    "nodes": [
+      {
+        "id": "1",
+        "type": "paciente",
+        "position": { "x": 250, "y": 100 },
+        "data": { "label": "Paciente" }
+      },
+      {
+        "id": "2",
+        "type": "masculino",
+        "position": { "x": 400, "y": 100 },
+        "data": { "label": "Hombre 1" }
+      },
+      {
+        "id": "3",
+        "type": "femenino",
+        "position": { "x": 600, "y": 150 },
+        "data": { "label": "Mujer 1" }
+      },
+      {
+        "id": "4",
+        "type": "fallecidoM",
+        "position": { "x": 300, "y": 300 },
+        "data": { "label": "Abuelo Fallecido" }
+      },
+      {
+        "id": "5",
+        "type": "fallecidoF",
+        "position": { "x": 500, "y": 300 },
+        "data": { "label": "Abuela Fallecida" }
+      },
+      {
+        "id": "6",
+        "type": "embarazo",
+        "position": { "x": 750, "y": 100 },
+        "data": { "label": "E" }
+      },
+      {
+        "id": "7",
+        "type": "aborto",
+        "position": { "x": 850, "y": 100 },
+        "data": { "label": "✖" }
+      },
+      {
+        "id": "8",
+        "type": "adopcion",
+        "position": { "x": 700, "y": 250 },
+        "data": { "label": "A" }
+      }
+    ],
+    "edges": [
+      {
+        "id": "1-2-matrimonio",
+        "source": "1",
+        "target": "2",
+        "type": "relationshipEdge",
+        "data": { "relType": "matrimonio" }
+      },
+      {
+        "id": "2-3-conflicto",
+        "source": "2",
+        "target": "3",
+        "type": "relationshipEdge",
+        "data": { "relType": "conflicto" }
+      },
+      {
+        "id": "4-5-matrimonio",
+        "source": "4",
+        "target": "5",
+        "type": "relationshipEdge",
+        "data": { "relType": "matrimonio" }
+      },
+      {
+        "id": "3-6",
+        "source": "3",
+        "target": "6",
+        "type": "relationshipEdge",
+        "data": { "relType": "cercana" }
+      },
+      {
+        "id": "3-7",
+        "source": "3",
+        "target": "7",
+        "type": "relationshipEdge",
+        "data": { "relType": "distante" }
+      },
+      {
+        "id": "1-8",
+        "source": "1",
+        "target": "8",
+        "type": "relationshipEdge",
+        "data": { "relType": "compromiso" }
+      }
+    ]
+  }
+  

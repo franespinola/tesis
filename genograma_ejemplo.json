@@ -1,0 +1,39 @@
+{
+    "nodes": [
+      {
+        "id": "1",
+        "type": "paciente",
+        "position": { "x": 250, "y": 100 },
+        "data": { "label": "Paciente" }
+      },
+      {
+        "id": "2",
+        "type": "masculino",
+        "position": { "x": 400, "y": 100 },
+        "data": { "label": "Pedro" }
+      },
+      {
+        "id": "3",
+        "type": "femenino",
+        "position": { "x": 600, "y": 100 },
+        "data": { "label": "María" }
+      }
+    ],
+    "edges": [
+      {
+        "id": "1-2-matrimonio",
+        "source": "1",
+        "target": "2",
+        "type": "relationshipEdge",
+        "data": { "relType": "matrimonio" }
+      },
+      {
+        "id": "2-3-violencia",
+        "source": "2",
+        "target": "3",
+        "type": "relationshipEdge",
+        "data": { "relType": "violencia" }
+      }
+    ]
+  }
+  
