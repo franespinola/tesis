@@ -1,0 +1,55 @@
+Tu tarea es extraer información relevante de una entrevista realizada a un paciente para generar un genograma.
+
+Analiza cuidadosamente los actores mencionados (familiares, hijos, padres, abuelos, abortos, adopciones, fallecidos, etc.) y sus relaciones (matrimonios, conflictos, distancias, compromisos).
+
+Devuelve un JSON con la siguiente estructura:
+
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "paciente" | "masculino" | "femenino" | "fallecidoM" | "fallecidoF" | "embarazo" | "aborto" | "adopcion",
+      "position": { "x": número, "y": número },
+      "data": { "label": "Nombre o descripción" }
+    },
+    ...
+  ],
+  "edges": [
+    {
+      "id": "id1-id2-relación",
+      "source": "id1",
+      "target": "id2",
+      "type": "relationshipEdge",
+      "data": { "relType": "matrimonio" | "conflicto" | "cercana" | "distante" | "compromiso" | "violencia" | "rota" | "cohabitacion" | "divorcio" }
+    },
+    ...
+  ]
+}
+
+Ejemplo: 
+- Si el paciente dice que su madre falleció y estaba casada con su padre, se crean 2 nodos (`fallecidoF`, `masculino`) y un edge de `matrimonio`.
+- Si menciona un aborto, se crea un nodo de tipo `aborto`.
+
+Evita repetir nodos. Usa IDs únicas. Posiciona a los nodos con lógica espacial (por generación o cercanía). Si no estás seguro, intenta deducirlo.
+Responde siempre en español
+
+Transcripción de la entrevista:
+"""
+Me llamo Laura, tengo 34 años. Estoy casada con Marcos desde hace 10 años. Tuvimos un embarazo hace 5 años, pero lamentablemente fue un aborto espontáneo. 
+
+Tengo dos hijos: Sofía, de 8 años, y Joaquín, de 5. 
+
+Mi madre, Teresa, falleció hace 3 años por una enfermedad. Mi padre, Roberto, sigue vivo. Se llevaban bien, nunca se separaron.
+
+También tengo una hermana menor, Valeria, con quien tengo una relación algo distante desde hace un tiempo.
+
+Mis abuelos paternos ya fallecieron: mi abuelo Antonio y mi abuela Carmen. Eran personas muy importantes para mí.
+
+En cambio, no conocí a mis abuelos maternos, porque murieron antes de que yo naciera.
+
+Adoptamos a una perrita que consideramos parte de la familia, se llama Nala.
+
+En mi adolescencia, tuve una relación muy conflictiva con un novio llamado Martín, pero no seguimos en contacto.
+
+Eso es todo lo que recuerdo ahora.
+"""

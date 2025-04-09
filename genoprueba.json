@@ -1,0 +1,197 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "paciente",
+      "position": { "x": 50, "y": 50 },
+      "data": { "label": "Laura" }
+    },
+    {
+      "id": "2",
+      "type": "masculino",
+      "position": { "x": 130, "y": 50 },
+      "data": { "label": "Marcos" }
+    },
+    {
+      "id": "3",
+      "type": "femenino",
+      "position": { "x": 80, "y": 70 },
+      "data": { "label": "Sofía (8)" }
+    },
+    {
+      "id": "4",
+      "type": "masculino",
+      "position": { "x": 100, "y": 70 },
+      "data": { "label": "Joaquín (5)" }
+    },
+    {
+      "id": "5",
+      "type": "femenino",
+      "position": { "x": 20, "y": 30 },
+      "data": { "label": "Teresa (fallecida)" }
+    },
+    {
+      "id": "6",
+      "type": "masculino",
+      "position": { "x": 40, "y": 30 },
+      "data": { "label": "Roberto" }
+    },
+    {
+      "id": "7",
+      "type": "femenino",
+      "position": { "x": 180, "y": 30 },
+      "data": { "label": "Valeria (hermana)" }
+    },
+    {
+      "id": "8",
+      "type": "aborto",
+      "position": { "x": 85, "y": 60 },
+      "data": { "label": "Embarazo perdido" }
+    },
+    {
+      "id": "9",
+      "type": "fallecidoM",
+      "position": { "x": 30, "y": 10 },
+      "data": { "label": "Antonio (abuelo paterno)" }
+    },
+    {
+      "id": "10",
+      "type": "fallecidoF",
+      "position": { "x": 50, "y": 10 },
+      "data": { "label": "Carmen (abuela paterna)" }
+    },
+    {
+      "id": "11",
+      "type": "adopcion",
+      "position": { "x": 230, "y": 50 },
+      "data": { "label": "Nala" }
+    },
+    {
+      "id": "12",
+      "type": "masculino",
+      "position": { "x": 85, "y": 90 },
+      "data": { "label": "Martín (ex)" }
+    }
+  ],
+  "edges": [
+    {
+      "id": "1-2-matrimonio",
+      "source": "1",
+      "target": "2",
+      "type": "relationshipEdge",
+      "data": { "relType": "matrimonio" }
+    },
+    {
+      "id": "1-3-ciudadadania",
+      "source": "1",
+      "target": "3",
+      "type": "relationshipEdge",
+      "data": { "relType": "cercana" }
+    },
+    {
+      "id": "2-3-ciudadadania",
+      "source": "2",
+      "target": "3",
+      "type": "relationshipEdge",
+      "data": { "relType": "cercana" }
+    },
+    {
+      "id": "1-4-ciudadadania",
+      "source": "1",
+      "target": "4",
+      "type": "relationshipEdge",
+      "data": { "relType": "cercana" }
+    },
+    {
+      "id": "2-4-ciudadadania",
+      "source": "2",
+      "target": "4",
+      "type": "relationshipEdge",
+      "data": { "relType": "cercana" }
+    },
+    {
+      "id": "1-5-madre",
+      "source": "1",
+      "target": "5",
+      "type": "relationshipEdge",
+      "data": { "relType": "madre" }
+    },
+    {
+      "id": "2-6-padre",
+      "source": "2",
+      "target": "6",
+      "type": "relationshipEdge",
+      "data": { "relType": "padre" }
+    },
+    {
+      "id": "1-7-hermanastra",
+      "source": "1",
+      "target": "7",
+      "type": "relationshipEdge",
+      "data": { "relType": "hermanastra" }
+    },
+    {
+      "id": "2-7-hermanastra",
+      "source": "2",
+      "target": "7",
+      "type": "relationshipEdge",
+      "data": { "relType": "hermanastra" }
+    },
+    {
+      "id": "1-8-embarazoPerdido",
+      "source": "1",
+      "target": "8",
+      "type": "relationshipEdge",
+      "data": { "relType": "embarazoPerdido" }
+    },
+    {
+      "id": "2-8-embarazoPerdido",
+      "source": "2",
+      "target": "8",
+      "type": "relationshipEdge",
+      "data": { "relType": "embarazoPerdido" }
+    },
+    {
+      "id": "5-9-abueloPaterno",
+      "source": "5",
+      "target": "9",
+      "type": "relationshipEdge",
+      "data": { "relType": "abueloPaterno" }
+    },
+    {
+      "id": "6-10-abuelaPaterna",
+      "source": "6",
+      "target": "10",
+      "type": "relationshipEdge",
+      "data": { "relType": "abuelaPaterna" }
+    },
+    {
+      "id": "1-11-mascota",
+      "source": "1",
+      "target": "11",
+      "type": "relationshipEdge",
+      "data": { "relType": "mascota" }
+    },
+    {
+      "id": "2-11-mascota",
+      "source": "2",
+      "target": "11",
+      "type": "relationshipEdge",
+      "data": { "relType": "mascota" }
+    },
+    {
+      "id": "1-12-exPareja",
+      "source": "1",
+      "target": "12",
+      "type": "relationshipEdge",
+      "data": { "relType": "exPareja" }
+    },
+    {
+      "id": "2-12-exPareja",
+      "source": "2",
+      "target": "12",
+      "type": "relationshipEdge",
+      "data": { "relType": "exPareja" }
+    }
+  ]
+}
