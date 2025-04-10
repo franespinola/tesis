@@ -9,10 +9,11 @@ import ReactFlow, {
   useEdgesState,
   Handle,
   Position,
-  getSmoothStepPath
+  getSmoothStepPath,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import html2canvas from "html2canvas";
+import dagre from "dagre";
 
 /** ========================
  *  Nodo editable, con label debajo
@@ -29,7 +30,9 @@ const PacienteNode = ({ data, id, onEdit }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       {/* La forma del nodo */}
       <div
         style={{
@@ -38,16 +41,32 @@ const PacienteNode = ({ data, id, onEdit }) => {
           background: "#e0f7fa",
           borderRadius: 10,
           border: "1px solid #0288d1",
-          position: "relative"
+          position: "relative",
         }}
       >
         {/* Handles: arriba/abajo */}
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
 
         {/* Handles: izquierda/derecha */}
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
 
       {/* Label debajo */}
@@ -85,21 +104,39 @@ const MasculinoNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 60,
           height: 60,
           background: "#ddd6fe",
           border: "2px solid #4f46e5",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
 
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
       {editing ? (
         <input
@@ -135,7 +172,9 @@ const FemeninoNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 60,
@@ -143,14 +182,30 @@ const FemeninoNode = ({ data, id }) => {
           borderRadius: "999px",
           background: "#fbcfe8",
           border: "2px solid #be185d",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
 
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
 
       {editing ? (
@@ -187,20 +242,38 @@ const FallecidoMNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 60,
           height: 60,
           background: "#fee2e2",
           border: "2px solid #7f1d1d",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
 
         {/* Cruz que cruce completamente el cuadrado */}
         <svg
@@ -209,8 +282,22 @@ const FallecidoMNode = ({ data, id }) => {
           viewBox="0 0 60 60"
           style={{ position: "absolute", top: 0, left: 0 }}
         >
-          <line x1="0" y1="0" x2="60" y2="60" stroke="#7f1d1d" strokeWidth="2" />
-          <line x1="60" y1="0" x2="0" y2="60" stroke="#7f1d1d" strokeWidth="2" />
+          <line
+            x1="0"
+            y1="0"
+            x2="60"
+            y2="60"
+            stroke="#7f1d1d"
+            strokeWidth="2"
+          />
+          <line
+            x1="60"
+            y1="0"
+            x2="0"
+            y2="60"
+            stroke="#7f1d1d"
+            strokeWidth="2"
+          />
         </svg>
       </div>
       {editing ? (
@@ -247,7 +334,9 @@ const FallecidoFNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 60,
@@ -255,13 +344,29 @@ const FallecidoFNode = ({ data, id }) => {
           borderRadius: "50%",
           background: "#fff1f2",
           border: "2px solid #be123c",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
 
         {/* Cruz centrada en el círculo */}
         <svg
@@ -270,8 +375,22 @@ const FallecidoFNode = ({ data, id }) => {
           viewBox="0 0 60 60"
           style={{ position: "absolute", top: 0, left: 0 }}
         >
-          <line x1="0" y1="0" x2="60" y2="60" stroke="#be123c" strokeWidth="2" />
-          <line x1="60" y1="0" x2="0" y2="60" stroke="#be123c" strokeWidth="2" />
+          <line
+            x1="0"
+            y1="0"
+            x2="60"
+            y2="60"
+            stroke="#be123c"
+            strokeWidth="2"
+          />
+          <line
+            x1="60"
+            y1="0"
+            x2="0"
+            y2="60"
+            stroke="#be123c"
+            strokeWidth="2"
+          />
         </svg>
       </div>
       {editing ? (
@@ -308,7 +427,9 @@ const EmbarazoNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 40,
@@ -316,14 +437,30 @@ const EmbarazoNode = ({ data, id }) => {
           borderRadius: "50%",
           background: "#fffbe6",
           border: "2px dashed #facc15",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
 
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
       {editing ? (
         <input
@@ -359,7 +496,9 @@ const AbortoNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 40,
@@ -367,13 +506,29 @@ const AbortoNode = ({ data, id }) => {
           borderRadius: "50%",
           background: "#fcd34d",
           border: "2px solid #b45309",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
 
       {editing ? (
@@ -410,7 +565,9 @@ const AdopcionNode = ({ data, id }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           width: 40,
@@ -418,13 +575,29 @@ const AdopcionNode = ({ data, id }) => {
           borderRadius: "50%",
           background: "#e0f2fe",
           border: "2px dotted #4b5563",
-          position: "relative"
+          position: "relative",
         }}
       >
-        <Handle type="target" position={Position.Top} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Bottom} style={{ background: "#555" }} />
-        <Handle type="target" position={Position.Left} style={{ background: "#555" }} />
-        <Handle type="source" position={Position.Right} style={{ background: "#555" }} />
+        <Handle
+          type="target"
+          position={Position.Top}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="target"
+          position={Position.Left}
+          style={{ background: "#555" }}
+        />
+        <Handle
+          type="source"
+          position={Position.Right}
+          style={{ background: "#555" }}
+        />
       </div>
 
       {editing ? (
@@ -457,7 +630,7 @@ const nodeTypes = {
   fallecidoF: FallecidoFNode,
   embarazo: EmbarazoNode,
   aborto: AbortoNode,
-  adopcion: AdopcionNode
+  adopcion: AdopcionNode,
 };
 
 /** =====================================================
@@ -516,7 +689,7 @@ function RelationshipEdge(props) {
     sourcePosition,
     targetPosition,
     data = {},
-    markerEnd
+    markerEnd,
   } = props;
 
   const relType = data.relType || "matrimonio";
@@ -533,7 +706,7 @@ function RelationshipEdge(props) {
     targetX,
     targetY,
     sourcePosition,
-    targetPosition
+    targetPosition,
   });
   const midX = labelX;
   const midY = labelY;
@@ -592,7 +765,14 @@ function RelationshipEdge(props) {
     case "violencia":
       strokeColor = "#ff0000";
       strokeWidth = 2;
-      edgePath = createRoundedWavePath(sourceX, sourceY, targetX, targetY, 30, 30);
+      edgePath = createRoundedWavePath(
+        sourceX,
+        sourceY,
+        targetX,
+        targetY,
+        30,
+        30
+      );
       break;
 
     case "conflicto":
@@ -609,7 +789,7 @@ function RelationshipEdge(props) {
         targetX,
         targetY: targetY - 3,
         sourcePosition,
-        targetPosition
+        targetPosition,
       });
       const [path2] = getSmoothStepPath({
         sourceX,
@@ -617,7 +797,7 @@ function RelationshipEdge(props) {
         targetX,
         targetY: targetY + 3,
         sourcePosition,
-        targetPosition
+        targetPosition,
       });
       extraElements = (
         <>
@@ -683,7 +863,7 @@ function RelationshipEdge(props) {
 }
 
 const edgeTypes = {
-  relationshipEdge: RelationshipEdge
+  relationshipEdge: RelationshipEdge,
 };
 
 /** Paleta de nodos + Etiqueta + Minishape (agrandados) */
@@ -698,7 +878,7 @@ function MiniIcon({ type }) {
             height: 20,
             background: "#ddd6fe",
             border: "2px solid #4f46e5",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -711,7 +891,7 @@ function MiniIcon({ type }) {
             borderRadius: "999px",
             background: "#fbcfe8",
             border: "2px solid #be185d",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -724,7 +904,7 @@ function MiniIcon({ type }) {
             background: "#fee2e2",
             border: "2px solid #7f1d1d",
             position: "relative",
-            marginRight: 6
+            marginRight: 6,
           }}
         >
           {/* Cruz centrada y que cruce los vértices */}
@@ -736,7 +916,7 @@ function MiniIcon({ type }) {
               position: "absolute",
               top: -4,
               left: 9,
-              transform: "rotate(45deg)"
+              transform: "rotate(45deg)",
             }}
           />
           <div
@@ -747,7 +927,7 @@ function MiniIcon({ type }) {
               position: "absolute",
               top: -4,
               left: 9,
-              transform: "rotate(-45deg)"
+              transform: "rotate(-45deg)",
             }}
           />
         </div>
@@ -762,7 +942,7 @@ function MiniIcon({ type }) {
             background: "#fff1f2",
             border: "2px solid #be123c",
             position: "relative",
-            marginRight: 6
+            marginRight: 6,
           }}
         >
           {/* Cruz centrada en el círculo */}
@@ -774,7 +954,7 @@ function MiniIcon({ type }) {
               position: "absolute",
               top: -4,
               left: 9,
-              transform: "rotate(45deg)"
+              transform: "rotate(45deg)",
             }}
           />
           <div
@@ -785,7 +965,7 @@ function MiniIcon({ type }) {
               position: "absolute",
               top: -4,
               left: 9,
-              transform: "rotate(-45deg)"
+              transform: "rotate(-45deg)",
             }}
           />
         </div>
@@ -799,7 +979,7 @@ function MiniIcon({ type }) {
             borderRadius: "50%",
             background: "#fffbe6",
             border: "2px dashed #facc15",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -813,7 +993,7 @@ function MiniIcon({ type }) {
             background: "#fcd34d",
             border: "2px solid #b45309",
             position: "relative",
-            marginRight: 6
+            marginRight: 6,
           }}
         >
           <div
@@ -823,7 +1003,7 @@ function MiniIcon({ type }) {
               background: "#b45309",
               position: "absolute",
               top: 0,
-              left: 9
+              left: 9,
             }}
           />
         </div>
@@ -837,7 +1017,7 @@ function MiniIcon({ type }) {
             borderRadius: "50%",
             background: "#e0f2fe",
             border: "2px dotted #4b5563",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -850,7 +1030,7 @@ function MiniIcon({ type }) {
             background: "#e0f7fa",
             borderRadius: 4,
             border: "1px solid #0288d1",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -861,7 +1041,7 @@ function MiniIcon({ type }) {
             width: 20,
             height: 20,
             background: "#ccc",
-            marginRight: 6
+            marginRight: 6,
           }}
         />
       );
@@ -875,7 +1055,7 @@ const nodePalette = [
   { type: "fallecidoF", label: "M. Fallecida" },
   { type: "embarazo", label: "Embarazo" },
   { type: "aborto", label: "Aborto" },
-  { type: "adopcion", label: "Adopción" }
+  { type: "adopcion", label: "Adopción" },
 ];
 
 /** Barra lateral */
@@ -885,7 +1065,7 @@ function Sidebar({
   onExportJSON,
   onExportCSV,
   onExportPNG,
-  onExportJPG
+  onExportJPG,
 }) {
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
@@ -900,7 +1080,7 @@ function Sidebar({
     "violencia",
     "cercana",
     "distante",
-    "rota"
+    "rota",
   ];
 
   return (
@@ -910,7 +1090,7 @@ function Sidebar({
         background: "#f3f4f6",
         padding: 10,
         borderLeft: "1px solid #ccc",
-        overflowY: "auto"
+        overflowY: "auto",
       }}
     >
       <h3 className="font-bold mb-2">Agregar nodo</h3>
@@ -919,7 +1099,10 @@ function Sidebar({
           key={idx}
           draggable
           onDragStart={(e) =>
-            e.dataTransfer.setData("application/reactflow", JSON.stringify(item))
+            e.dataTransfer.setData(
+              "application/reactflow",
+              JSON.stringify(item)
+            )
           }
           style={{
             padding: 10,
@@ -929,7 +1112,7 @@ function Sidebar({
             borderRadius: 6,
             textAlign: "center",
             display: "flex",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <MiniIcon type={item.type} />
@@ -971,7 +1154,7 @@ function Sidebar({
           padding: 6,
           border: "none",
           borderRadius: 4,
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         Relacionar
@@ -1099,7 +1282,7 @@ function Sidebar({
           border: "none",
           borderRadius: 4,
           cursor: "pointer",
-          marginBottom: 6
+          marginBottom: 6,
         }}
       >
         Exportar JSON
@@ -1114,7 +1297,7 @@ function Sidebar({
           border: "none",
           borderRadius: 4,
           cursor: "pointer",
-          marginBottom: 6
+          marginBottom: 6,
         }}
       >
         Exportar CSV
@@ -1129,7 +1312,7 @@ function Sidebar({
           border: "none",
           borderRadius: 4,
           cursor: "pointer",
-          marginBottom: 6
+          marginBottom: 6,
         }}
       >
         Exportar PNG
@@ -1143,7 +1326,7 @@ function Sidebar({
           padding: 6,
           border: "none",
           borderRadius: 4,
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         Exportar JPG
@@ -1155,14 +1338,45 @@ function Sidebar({
 /** ========================
  *  Componente principal
  * ======================== */
+function layoutWithDagre(nodes, edges) {
+  // 1. Creamos un Graph de dagre
+  const g = new dagre.graphlib.Graph();
+  g.setDefaultEdgeLabel(() => ({}));
+  // Configuración de dagre: dirección y separaciones
+  g.setGraph({ rankdir: "TB", ranksep: 100, nodesep: 80 });
+
+  // 2. Añadimos nodos a dagre (usando id, width, height)
+  nodes.forEach((node) => {
+    // Por simplicidad: cada nodo 100x100 (o adaptado a tu nodo real)
+    g.setNode(node.id, { width: 100, height: 100 });
+  });
+
+  // 3. Añadimos edges a dagre (source → target)
+  edges.forEach((edge) => {
+    g.setEdge(edge.source, edge.target);
+  });
+
+  // 4. Ejecutamos dagre layout
+  dagre.layout(g);
+
+  // 5. Devolvemos nodos con positions asignadas
+  return nodes.map((node) => {
+    const nodeWithPosition = g.node(node.id);
+    // dagre te da x,y centrados => ajustamos un poco
+    return {
+      ...node,
+      position: { x: nodeWithPosition.x - 50, y: nodeWithPosition.y - 50 },
+    };
+  });
+}
 function GenogramaEditorWrapper() {
   const [nodes, setNodes, onNodesChange] = useNodesState([
     {
       id: "1",
       type: "paciente",
       position: { x: 250, y: 100 },
-      data: { label: "Paciente" }
-    }
+      data: { label: "Paciente" },
+    },
   ]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [idCounter, setIdCounter] = useState(2);
@@ -1185,7 +1399,7 @@ function GenogramaEditorWrapper() {
           color: "white",
           padding: "8px 12px",
           borderRadius: "8px",
-          zIndex: 9999
+          zIndex: 9999,
         });
         document.body.appendChild(div);
         setTimeout(() => document.body.removeChild(div), 2500);
@@ -1199,14 +1413,16 @@ function GenogramaEditorWrapper() {
       }
 
       setEdges((eds) => [
-        ...eds.filter((edge) => !(edge.source === source && edge.target === target)),
+        ...eds.filter(
+          (edge) => !(edge.source === source && edge.target === target)
+        ),
         {
           id: `${source}-${target}-${relType}`,
           source,
           target,
           type: "relationshipEdge",
-          data: { relType }
-        }
+          data: { relType },
+        },
       ]);
 
       setNodes((nds) =>
@@ -1216,8 +1432,8 @@ function GenogramaEditorWrapper() {
                 ...node,
                 style: {
                   ...node.style,
-                  boxShadow: "0 0 0 4px rgba(59,130,246,0.5)"
-                }
+                  boxShadow: "0 0 0 4px rgba(59,130,246,0.5)",
+                },
               }
             : node
         )
@@ -1233,16 +1449,18 @@ function GenogramaEditorWrapper() {
     (event) => {
       event.preventDefault();
       const reactFlowBounds = event.currentTarget.getBoundingClientRect();
-      const data = JSON.parse(event.dataTransfer.getData("application/reactflow"));
+      const data = JSON.parse(
+        event.dataTransfer.getData("application/reactflow")
+      );
       const position = {
         x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top
+        y: event.clientY - reactFlowBounds.top,
       };
       const newNode = {
         id: String(idCounter),
         type: data.type,
         position,
-        data: { label: data.label }
+        data: { label: data.label },
       };
       setNodes((nds) => nds.concat(newNode));
       setIdCounter((prev) => prev + 1);
@@ -1260,7 +1478,9 @@ function GenogramaEditorWrapper() {
     (id, newLabel) => {
       setNodes((nds) =>
         nds.map((node) =>
-          node.id === id ? { ...node, data: { ...node.data, label: newLabel } } : node
+          node.id === id
+            ? { ...node, data: { ...node.data, label: newLabel } }
+            : node
         )
       );
     },
@@ -1270,6 +1490,7 @@ function GenogramaEditorWrapper() {
   /** ========================
    * IMPORT / EXPORT
    * ======================== */
+
   const onImportJSON = useCallback(
     (e) => {
       const file = e.target.files?.[0];
@@ -1279,10 +1500,14 @@ function GenogramaEditorWrapper() {
         try {
           const parsed = JSON.parse(event.target.result);
           if (parsed.nodes && parsed.edges) {
-            setNodes(parsed.nodes);
+            // 1) Aplico dagre layout
+            const laidOutNodes = layoutWithDagre(parsed.nodes, parsed.edges);
+            setNodes(laidOutNodes);
             setEdges(parsed.edges);
+
+            // 2) Ajustamos el idCounter
             let maxId = 0;
-            parsed.nodes.forEach((n) => {
+            laidOutNodes.forEach((n) => {
               const numericId = parseInt(n.id, 10);
               if (!isNaN(numericId) && numericId > maxId) {
                 maxId = numericId;
@@ -1331,23 +1556,20 @@ function GenogramaEditorWrapper() {
   }, [nodes, edges]);
 
   // Exportar como imagen usando html2canvas
-  const onExportImage = useCallback(
-    async (format = "png") => {
-      const flowArea = document.querySelector(".react-flow"); // contenedor principal
-      if (!flowArea) return;
-      try {
-        const canvas = await html2canvas(flowArea);
-        const dataUrl = canvas.toDataURL(`image/${format}`);
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `genograma.${format}`;
-        link.click();
-      } catch (err) {
-        alert("Ocurrió un error al exportar la imagen.");
-      }
-    },
-    []
-  );
+  const onExportImage = useCallback(async (format = "png") => {
+    const flowArea = document.querySelector(".react-flow"); // contenedor principal
+    if (!flowArea) return;
+    try {
+      const canvas = await html2canvas(flowArea);
+      const dataUrl = canvas.toDataURL(`image/${format}`);
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `genograma.${format}`;
+      link.click();
+    } catch (err) {
+      alert("Ocurrió un error al exportar la imagen.");
+    }
+  }, []);
 
   const onExportPNG = useCallback(() => {
     onExportImage("png");
@@ -1360,11 +1582,15 @@ function GenogramaEditorWrapper() {
   return (
     <ReactFlowProvider>
       <div style={{ display: "flex", height: "100vh" }}>
-        <div style={{ width: "80vw", height: "100vh" }} onDrop={onDrop} onDragOver={onDragOver}>
+        <div
+          style={{ width: "80vw", height: "100vh" }}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+        >
           <ReactFlow
             nodes={nodes.map((node) => ({
               ...node,
-              data: { ...node.data, onEdit: handleEditLabel }
+              data: { ...node.data, onEdit: handleEditLabel },
             }))}
             edges={edges}
             onNodesChange={onNodesChange}

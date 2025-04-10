@@ -1,0 +1,82 @@
+Tu tarea es generar un JSON con la estructura:
+{
+  "nodes": [
+    {
+      "id": "string",
+      "type": "paciente" | "masculino" | "femenino" | "fallecidoM" | "fallecidoF" | "embarazo" | "aborto" | "adopcion",
+      "position": { "x": number, "y": number },
+      "data": { "label": "Texto descriptivo" }
+    }
+    ...
+  ],
+  "edges": [
+    {
+      "id": "sourceId-targetId-relacion",
+      "source": "sourceId",
+      "target": "targetId",
+      "type": "relationshipEdge",
+      "data": { "relType": "matrimonio" | "divorcio" | "cohabitacion" | "compromiso" | "conflicto" | "violencia" | "cercana" | "distante" | "rota" | "parentChild" }
+    }
+    ...
+  ]
+}
+
+Reglas importantes que debes aplicar al procesar la entrevista:
+
+1-Relaciones de ascendencia/descendencia:
+
+Usa relType: "parentChild".
+
+El padre/madre o abuelo/abuela va en el campo "source".
+
+El hijo/a o nieto/a va en el campo "target".
+
+Ejemplo: si “Roberto” es padre de “Laura”, entonces:
+
+    {
+    "id": "roberto-laura-parentChild",
+    "source": "roberto",
+    "target": "laura",
+    "type": "relationshipEdge",
+    "data": { "relType": "parentChild" }
+    }
+
+Nunca pongas source = hijo y target = padre. Queremos un flujo “hacia abajo” (abuelos → padres + tios → hijos + primos).
+
+2-Tipo de nodo:
+
+paciente: para la persona protagonista de la entrevista (ej. “Laura”).
+
+masculino o femenino: para personas vivas (ej. padre, hermanos, primos, etc.).
+
+fallecidoM o fallecidoF: para personas fallecidas, masculinas o femeninas respectivamente (ej. “Teresa (fallecida)” => "type": "fallecidoF").
+
+aborto: para abortos mencionados.
+
+embarazo: para embarazos en curso.
+
+adopcion: para señalar adopciones (ej. una mascota, si quieres representarla).
+
+3-Relaciones no ascendentes (matrimonio, divorcio, conflicto, etc.):
+
+Usa relType = "matrimonio", "cohabitacion", "conflicto", etc.
+
+Ejemplo: si “Laura” está casada con “Marcos”, pones:
+
+{
+  "id": "laura-marcos-matrimonio",
+  "source": "laura",
+  "target": "marcos",
+  "type": "relationshipEdge",
+  "data": { "relType": "matrimonio" }
+}
+
+No uses "parentChild" para relaciones de pareja o noviazgo (ej. “Martín” y “Laura” no son ascendencia; podría ser "relType": "conflicto" si era una relación conflictiva).
+
+4-IDs únicas: Usa un string corto o un nombre. Ej. "laura", "marcos", "teresa", etc.
+
+5-Posiciones (position.x, position.y): Pon valores numéricos coherentes con cada generación. Por ejemplo, abuelos con y=50, padres con y=250, paciente y hermanos con y=450, etc.
+
+6-Sin repeticiones de nodos: si “Laura” se menciona varias veces, es siempre el mismo id.
+
+7-En español, sin explicaciones. Devuelve solo el JSON.
